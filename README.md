@@ -23,35 +23,22 @@ The application provides a web interface where users can enter a URL and receive
 - [Problem Statement](#-problem-statement)
 - [Objectives](#-objectives)
 - [Project Scope](#-project-scope)
-- [How the System Works](#-how-the-system-works)
+- [How the System Works](#️-how-the-system-works)
 - [System Architecture](#-system-architecture)
 - [Machine Learning Model](#-machine-learning-model)
 - [Dataset](#-dataset)
-- [Features Used](#-features-used)
-- [Feature Extraction](#-feature-extraction)
-- [Hybrid Detection System](#-hybrid-detection-system)
-- [Rule-Based Risk Analysis](#-rule-based-risk-analysis)
-- [Risk Score](#-risk-score)
-- [Model Performance](#-model-performance)
-- [Results](#-results)
-- [Web Application](#-web-application)
-- [Technologies Used](#-technologies-used)
+- [Features Used / URL Characteristics Analyzed](#-url-characteristics-analyzed)
 - [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Running the Application](#-running-the-application)
-- [How to Use](#-how-to-use)
-- [Understanding the Output](#-understanding-the-output)
-- [Model Development](#-model-development)
+- [Complete Data Flow](#-complete-data-flow)
 - [Security Considerations](#-security-considerations)
-- [Limitations](#-limitations)
+- [Limitations](#️-limitations)
 - [Future Scope](#-future-scope)
-- [Academic Relevance](#-academic-relevance)
-- [Author](#-author)
-- [Disclaimer](#-disclaimer)
+- [Main Concepts Demonstrated](#-main-concepts-demonstrated)
+- [Development Environment](#-development-environment)
 
 ---
 
-# 🔎 About the Project
+## 🔎 About the Project
 
 Phishing is one of the most common cybersecurity threats on the Internet.
 
@@ -83,7 +70,7 @@ Instead of manually inspecting a URL, the system converts the URL into numerical
 
 ---
 
-# ❗ Problem Statement
+## ❗ Problem Statement
 
 Users frequently encounter suspicious links through:
 
@@ -101,7 +88,7 @@ The goal of this project is to develop a Machine Learning-based system that can 
 
 ---
 
-# 🎯 Objectives
+## 🎯 Objectives
 
 The main objectives of PhishGuard are:
 
@@ -116,13 +103,13 @@ The main objectives of PhishGuard are:
 
 ---
 
-# 📋 Project Scope
+## 📋 Project Scope
 
 The current version of PhishGuard focuses on **URL-based phishing detection**.
 
 The system analyzes the URL itself rather than opening or crawling the target website.
 
-## Included
+### Included
 
 - URL input
 - URL preprocessing
@@ -138,7 +125,7 @@ The system analyzes the URL itself rather than opening or crawling the target we
 - Model evaluation
 - Feature importance analysis
 
-## Not Included
+### Not Included
 
 The current version does not include:
 
@@ -156,14 +143,14 @@ These features can be considered for future development.
 
 ---
 
-# ⚙️ How the System Works
+## ⚙️ How the System Works
 
 The complete workflow is:
 
 ```text
                     ┌───────────────────┐
                     │    User enters    │
-                    │       URL         │
+                    │        URL        │
                     └─────────┬─────────┘
                               │
                               ▼
@@ -181,142 +168,173 @@ The complete workflow is:
                  │                         │
                  ▼                         ▼
        ┌───────────────────┐     ┌───────────────────┐
-       │  Random Forest    │     │  Rule-Based Risk  │
-       │      Model        │     │     Analyzer      │
+       │   Random Forest   │     │   Rule-Based Risk │
+       │       Model       │     │      Analyzer     │
        └─────────┬─────────┘     └─────────┬─────────┘
                  │                         │
                  │                         ▼
                  │                ┌───────────────────┐
-                 │                │ Risk Score +      │
-                 │                │ Reasons           │
+                 │                │  Risk Score +     │
+                 │                │     Reasons       │
                  │                └─────────┬─────────┘
                  │                          │
                  └────────────┬─────────────┘
                               ▼
                     ┌───────────────────┐
-                    │ Hybrid Decision   │
+                    │  Hybrid Decision  │
                     └─────────┬─────────┘
                               │
                               ▼
               ┌──────────────────────────────┐
-              │ Final Result                 │
+              │        Final Result          │
               │                              │
-              │ Phishing                     │
-              │ Suspicious                   │
-              │ Legitimate                   │
+              │  Phishing                    │
+              │  Suspicious                  │
+              │  Legitimate                  │
               │                              │
-              │ Risk Score                   │
-              │ Risk Level                   │
-              │ Reasons                      │
+              │  Risk Score                  │
+              │  Risk Level                  │
+              │  Reasons                     │
               └──────────────────────────────┘
+```
 
-System Architecture
+---
 
+## 🏗️ System Architecture
 
+```text
 ┌──────────────────────────────────────────┐
-│              Frontend UI                 │
-│        HTML + CSS + JavaScript           │
-└────────────────────┬─────────────────────┘
-                     │
-                     │ HTTP Request
-                     ▼
+│                Frontend UI                │
+│         HTML + CSS + JavaScript           │
+└────────────────────┬───────────────────────┘
+                      │ HTTP Request
+                      ▼
 ┌──────────────────────────────────────────┐
-│             FastAPI Backend              │
-│               app/main.py                │
-└────────────────────┬─────────────────────┘
-                     │
-                     ▼
+│              FastAPI Backend              │
+│                app/main.py                │
+└────────────────────┬───────────────────────┘
+                      │
+                      ▼
 ┌──────────────────────────────────────────┐
-│           Prediction Module              │
-│               predict.py                 │
-└───────────────┬──────────────────────────┘
-                │
-        ┌───────┴────────┐
-        ▼                ▼
-┌───────────────┐  ┌────────────────────┐
-│ Feature       │  │ Rule-Based Risk    │
-│ Extraction    │  │ Analyzer            │
-│               │  │                    │
-│ feature_      │  │ risk_analyzer.py  │
-│ extraction.py │  │                    │
-└───────┬───────┘  └─────────┬──────────┘
-        │                     │
-        ▼                     │
-┌───────────────────┐         │
-│ Random Forest     │         │
-│ Model             │         │
-│                   │         │
-│ random_forest_    │         │
-│ final.pkl         │         │
-└─────────┬─────────┘         │
-          │                   │
-          └─────────┬─────────┘
-                    ▼
-           ┌───────────────────┐
-           │ Final Prediction  │
-           │ + Risk Analysis   │
-           └───────────────────┘
+│            Prediction Module              │
+│                predict.py                 │
+└───────────────┬────────────────────────────┘
+                 │
+         ┌───────┴────────┐
+         ▼                ▼
+┌────────────────┐  ┌─────────────────────┐
+│    Feature      │  │   Rule-Based Risk   │
+│   Extraction    │  │      Analyzer       │
+│                 │  │                     │
+│ feature_        │  │  risk_analyzer.py   │
+│ extraction.py   │  │                     │
+└────────┬────────┘  └──────────┬──────────┘
+         │                      │
+         ▼                      │
+┌────────────────────┐          │
+│   Random Forest     │          │
+│       Model         │          │
+│                      │          │
+│ random_forest_       │          │
+│ final.pkl             │          │
+└──────────┬───────────┘          │
+           │                      │
+           └──────────┬───────────┘
+                       ▼
+              ┌───────────────────┐
+              │  Final Prediction │
+              │  + Risk Analysis  │
+              └───────────────────┘
+```
 
-Machine Learning Model:-
+---
+
+## 🤖 Machine Learning Model
 
 The main Machine Learning algorithm used in this project is:
-Random Forest Classifier
-Random Forest is an ensemble Machine Learning algorithm based on multiple decision trees.
-Instead of depending on a single decision tree, Random Forest combines predictions from many trees to produce a final classification.
-Model Configuration
-Algorithm       : Random Forest Classifier
-Number of Trees : 100
-Random State    : 42
-Parallel Jobs   : -1
+
+**Random Forest Classifier**
+
+Random Forest is an ensemble Machine Learning algorithm based on multiple decision trees. Instead of depending on a single decision tree, Random Forest combines predictions from many trees to produce a final classification.
+
+### Model Configuration
+
+| Parameter        | Value |
+|-------------------|-------|
+| Algorithm         | Random Forest Classifier |
+| Number of Trees   | 100 |
+| Random State      | 42 |
+| Parallel Jobs     | -1 |
+
 The primary trained model is:
+
+```
 models/random_forest_final.pkl
-The model is loaded using the joblib library during prediction.
+```
 
-Dataset:-
+The model is loaded using the `joblib` library during prediction.
 
-The project uses the:
-PhiUSIIL Phishing URL Dataset
+---
+
+## 📊 Dataset
+
+The project uses the **PhiUSIIL Phishing URL Dataset**.
+
 The PhiUSIIL dataset contains phishing and legitimate URL examples along with URL and webpage-related characteristics.
-Dataset information used in this project:
-Instances : 235,795
-Columns   : 56
-Dataset Labels
-0 → Phishing
-1 → Legitimate
-The original dataset contains many features.
-For the deployed Machine Learning model, a selected set of 18 URL-oriented features is used.
-These features can be extracted directly from a submitted URL without visiting the target website.
 
-Dataset Sources:-
-UCI Machine Learning Repository
-https://archive.ics.uci.edu/dataset/967/phiusil-phishing-url-dataset
-Mendeley Data
-https://data.mendeley.com/datasets/shwpxscxy2/2
+### Dataset Information Used in This Project
 
-URL Characteristics Analyzed:-
+| Property   | Value |
+|------------|-------|
+| Instances  | 235,795 |
+| Columns    | 56 |
 
-Domain Characteristics
-Domain length
-IP address usage
-Number of subdomains
-TLD length
-Character Characteristics
-Number of letters
-Number of digits
-Special characters
-Character ratios
-URL Structure
-URL length
-Query marks
-Equals signs
-Ampersands
-URL path
-Security Characteristics
-HTTPS
-Obfuscated characters
+### Dataset Labels
 
-📁 Project Structure:-
+| Label | Meaning |
+|-------|---------|
+| 0     | Phishing |
+| 1     | Legitimate |
 
+The original dataset contains many features. For the deployed Machine Learning model, a selected set of **18 URL-oriented features** is used. These features can be extracted directly from a submitted URL without visiting the target website.
+
+### Dataset Sources
+
+- **UCI Machine Learning Repository** — https://archive.ics.uci.edu/dataset/967/phiusil-phishing-url-dataset
+- **Mendeley Data** — https://data.mendeley.com/datasets/shwpxscxy2/2
+
+---
+
+## 🧩 URL Characteristics Analyzed
+
+### Domain Characteristics
+- Domain length
+- IP address usage
+- Number of subdomains
+- TLD length
+
+### Character Characteristics
+- Number of letters
+- Number of digits
+- Special characters
+- Character ratios
+
+### URL Structure
+- URL length
+- Query marks
+- Equals signs
+- Ampersands
+- URL path
+
+### Security Characteristics
+- HTTPS
+- Obfuscated characters
+
+---
+
+## 📁 Project Structure
+
+```text
 Phishing-URL-Detection/
 │
 ├── app/
@@ -365,9 +383,13 @@ Phishing-URL-Detection/
 │
 ├── requirements.txt
 └── test_setup.py
+```
 
-Complete Data Flow:-
+---
 
+## 🔄 Complete Data Flow
+
+```text
 PhiUSIIL Dataset
        │
        ▼
@@ -411,9 +433,11 @@ Prediction        Risk Analysis
                │
                ▼
       Final Application Result
+```
 
+---
 
-🔐 Security Considerations
+## 🔐 Security Considerations
 
 PhishGuard is primarily an educational and academic cybersecurity project.
 
@@ -421,83 +445,77 @@ The application analyzes the submitted URL without intentionally browsing the ta
 
 It does not:
 
-Enter credentials
-Download files from the target website
-Submit forms
-Interact with the target website
-Guarantee website safety
-Replace professional security products
+- Enter credentials
+- Download files from the target website
+- Submit forms
+- Interact with the target website
+- Guarantee website safety
+- Replace professional security products
 
-⚠️ Limitations
-1. URL-Based Detection
-The system primarily analyzes URL characteristics.
-It does not inspect the complete webpage.
+---
 
-2. No Live Threat Intelligence
-The application does not currently query live threat-intelligence databases.
+## ⚠️ Limitations
 
-3. No Website Content Analysis
-HTML, JavaScript, images, forms, and webpage behavior are not analyzed.
+1. **URL-Based Detection** — The system primarily analyzes URL characteristics. It does not inspect the complete webpage.
+2. **No Live Threat Intelligence** — The application does not currently query live threat-intelligence databases.
+3. **No Website Content Analysis** — HTML, JavaScript, images, forms, and webpage behavior are not analyzed.
+4. **Dataset Dependency** — Machine Learning performance depends on the quality and distribution of the training dataset.
+5. **False Positives and False Negatives** — No Machine Learning system is perfect. A legitimate URL may be classified incorrectly, and a phishing URL may sometimes evade detection.
+6. **HTTPS Limitation** — HTTPS indicates encrypted communication but does not prove that a website is trustworthy.
+7. **Evolving Attacks** — New phishing techniques may not be represented in the training dataset.
 
-4. Dataset Dependency
-Machine Learning performance depends on the quality and distribution of the training dataset.
+---
 
-5. False Positives and False Negatives
-No Machine Learning system is perfect.
-A legitimate URL may be classified incorrectly, and a phishing URL may sometimes evade detection.
+## 🚀 Future Scope
 
-6. HTTPS Limitation
-HTTPS indicates encrypted communication but does not prove that a website is trustworthy.
-
-7. Evolving Attacks
-New phishing techniques may not be represented in the training dataset.
-
-
-🚀 Future Scope
 PhishGuard can be extended with additional cybersecurity capabilities.
 
-🌐 Real-Time Threat Intelligence
+### 🌐 Real-Time Threat Intelligence
 Integrate threat-intelligence services to check URLs against known malicious URL databases.
 
-🔎 Website Content Analysis
+### 🔎 Website Content Analysis
 Analyze:
-HTML
-JavaScript
-Forms
-External resources
-Login pages
-Redirect behavior
-🌍 Domain Analysis
+- HTML
+- JavaScript
+- Forms
+- External resources
+- Login pages
+- Redirect behavior
 
+### 🌍 Domain Analysis
 Add:
-Domain age
-WHOIS information
-DNS information
-IP reputation
-SSL certificate information
-🧠 Advanced Machine Learning
+- Domain age
+- WHOIS information
+- DNS information
+- IP reputation
+- SSL certificate information
 
+### 🧠 Advanced Machine Learning
 Experiment with:
-Gradient Boosting
-XGBoost
-LightGBM
-Neural Networks
-Deep Learning
-NLP-based URL analysis
+- Gradient Boosting
+- XGBoost
+- LightGBM
+- Neural Networks
+- Deep Learning
+- NLP-based URL analysis
 
-🌐 Browser Extension
+### 🌐 Browser Extension
 Develop a browser extension that automatically analyzes links while browsing.
 
-☁️ Cloud Deployment
+### ☁️ Cloud Deployment
 Deploy the application to a cloud platform so users can access it remotely.
 
-🔄 Continuous Learning
+### 🔄 Continuous Learning
 Automatically retrain the model using newly collected phishing URLs.
 
-📱 Mobile Application
+### 📱 Mobile Application
 Develop a mobile application for checking suspicious links.
 
-📚 Main Concepts Demonstrated:-
+---
+
+## 📚 Main Concepts Demonstrated
+
+```text
 Python
    │
    ├── Data Processing
@@ -520,13 +538,19 @@ Python
           │
           ▼
       Web Interface
+```
 
-🧰 Development Environment
-Programming Language: Python
-Backend              : FastAPI
-Machine Learning    : Scikit-learn
-Model               : Random Forest
-Frontend            : HTML / CSS / JavaScript
-Data Processing     : Pandas / NumPy
-Visualization       : Matplotlib / Seaborn
-Version Control     : Git / GitHub
+---
+
+## 🧰 Development Environment
+
+| Component            | Technology |
+|-----------------------|------------|
+| Programming Language | Python |
+| Backend              | FastAPI |
+| Machine Learning     | Scikit-learn |
+| Model                | Random Forest |
+| Frontend             | HTML / CSS / JavaScript |
+| Data Processing      | Pandas / NumPy |
+| Visualization        | Matplotlib / Seaborn |
+| Version Control      | Git / GitHub |

@@ -1,0 +1,57 @@
+PHISHGUARD - MACHINE LEARNING RESULTS
+========================================
+Model: Random Forest Classifier
+Training Dataset: final_train.csv
+Testing Dataset: final_test.csv
+Number of Training Samples: 188296
+Number of Testing Samples: 47074
+Number of Features: 18
+Label Meaning:
+0 = Phishing
+1 = Legitimate
+TEST ACCURACY
+------------
+99.74%
+CLASSIFICATION REPORT
+---------------------
+              precision    recall  f1-score   support
+
+    Phishing       1.00      0.99      1.00     20104
+  Legitimate       1.00      1.00      1.00     26970
+
+    accuracy                           1.00     47074
+   macro avg       1.00      1.00      1.00     47074
+weighted avg       1.00      1.00      1.00     47074
+
+CONFUSION MATRIX
+----------------
+Rows = Actual
+Columns = Predicted
+             Phishing  Legitimate
+Phishing         20001         103
+Legitimate          18       26952
+FEATURE IMPORTANCE
+------------------
+IsHTTPS: 0.387454
+NoOfOtherSpecialCharsInURL: 0.137302
+NoOfDegitsInURL: 0.091705
+LetterRatioInURL: 0.075969
+DegitRatioInURL: 0.069939
+URLLength: 0.063760
+SpacialCharRatioInURL: 0.051906
+NoOfLettersInURL: 0.050518
+NoOfSubDomain: 0.037991
+DomainLength: 0.024655
+TLDLength: 0.007153
+NoOfQMarkInURL: 0.000862
+NoOfEqualsInURL: 0.000786
+IsDomainIP: 0.000000
+NoOfAmpersandInURL: 0.000000
+HasObfuscation: 0.000000
+NoOfObfuscatedChar: 0.000000
+ObfuscationRatio: 0.000000
+
+NOTE
+----
+The deployed PhishGuard application combines the Random Forest model output
+with rule-based risk analysis for the final risk classification.

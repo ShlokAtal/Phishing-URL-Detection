@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard | URL Security Scanner</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="background-grid"></div>
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">◈</div>
+            <div>
+                <div class="brand-name">PHISHGUARD</div>
+                <div class="brand-subtitle">URL SECURITY ENGINE</div>
+            </div>
+        </div>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+            ML ENGINE ONLINE
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="eyebrow">
+                MACHINE LEARNING SECURITY ANALYSIS
+            </div>
+            <h1>
+                Detect malicious URLs<br>
+                <span>before you trust them.</span>
+            </h1>
+            <p class="hero-description">
+                Analyze URL characteristics using a trained machine learning
+                model and identify potentially suspicious links.
+            </p>
+            <div class="scanner-card">
+                <div class="input-label">
+                    ENTER URL TO ANALYZE
+                </div>
+                <div class="url-input-container">
+                    <span class="input-icon">↗</span>
+                    <input
+                        type="text"
+                        id="urlInput"
+                        placeholder="https://example.com"
+                        autocomplete="off"
+                    >
+                    <button id="scanButton">
+                        ANALYZE
+                        <span>→</span>
+                    </button>
+                </div>
+                <div class="scanner-footer">
+                    <span>●</span>
+                    Analysis runs locally through your ML API
+                </div>
+            </div>
+        </section>
+
+        <section id="resultSection" class="result-section hidden">
+            <div class="section-heading">
+                <span>SCAN RESULT</span>
+                <div></div>
+            </div>
+
+            <div class="result-grid">
+                <div class="risk-card">
+                    <div class="risk-label">
+                        PHISHING RISK
+                    </div>
+                    <div class="risk-score" id="riskScore">
+                        0%
+                    </div>
+                    <div class="risk-level" id="riskLevel">
+                        LOW
+                    </div>
+                    <div class="risk-meter">
+                        <div id="riskMeter"></div>
+                    </div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-icon" id="predictionIcon">
+                        ✓
+                    </div>
+                    <div>
+                        <div class="prediction-label">
+                            CLASSIFICATION
+                        </div>
+                        <div
+                            class="prediction"
+                            id="prediction"
+                        >
+                            LEGITIMATE
+                        </div>
+                        <div
+                            class="prediction-description"
+                            id="predictionDescription"
+                        >
+                            No major suspicious characteristics detected.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <div class="analysis-header">
+                    <div>
+                        <div class="analysis-title">
+                            SECURITY ANALYSIS
+                        </div>
+                        <div
+                            class="scanned-url"
+                            id="scannedUrl"
+                        >
+                        </div>
+                    </div>
+                    <div class="model-badge">
+                        RANDOM FOREST
+                    </div>
+                </div>
+
+                <div class="analysis-content">
+                    <div class="analysis-column">
+                        <div class="analysis-item">
+                            <span>MODEL PROBABILITY</span>
+                            <strong id="modelProbability">0%</strong>
+                        </div>
+                        <div class="analysis-item">
+                            <span>RISK LEVEL</span>
+                            <strong id="analysisRiskLevel">LOW</strong>
+                        </div>
+                    </div>
+
+                    <div class="reasons">
+                        <div class="reasons-title">
+                            DETECTED CHARACTERISTICS
+                        </div>
+                        <div id="reasonsList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button
+                class="scan-again"
+                id="scanAgain"
+            >
+                ← SCAN ANOTHER URL
+            </button>
+        </section>
+    </main>
+    <footer>
+        <div>
+            PHISHGUARD • MACHINE LEARNING CYBERSECURITY PROJECT
+        </div>
+        <div>
+            RANDOM FOREST CLASSIFIER
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
